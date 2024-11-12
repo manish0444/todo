@@ -1,26 +1,26 @@
 {
-  "name": "todo-mern-app",
-  "builds": [
-    {
-        "src": "client/package.json",
+    "version": 2,
+    "builds": [
+      {
+        "src": "server/server.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "client/*",
         "use": "@vercel/static-build",
         "config": {
-          "distDir": "client/dist"
+          "distDir": "dist"
         }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "server/server.js"
       },
-    {
-      "src": "server/server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/client/$1"
-    }
-  ]
-}
+      {
+        "src": "/(.*)",
+        "dest": "client/dist/$1"
+      }
+    ]
+  }
